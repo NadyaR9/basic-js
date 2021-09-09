@@ -1,4 +1,6 @@
-import { NotImplementedError } from '../extensions/index.js';
+import {
+  NotImplementedError
+} from '../extensions/index.js';
 
 const MODERN_ACTIVITY = 15;
 const HALF_LIFE_PERIOD = 5730;
@@ -17,7 +19,22 @@ const HALF_LIFE_PERIOD = 5730;
  * dateSample('WOOT!') => false
  *
  */
-export default function dateSample(/* sampleActivity */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function isANumber(str) {
+  return !/\D/.test(str);
+}
+console.log(isANumber('one'));
+export default function dateSample(sampleActivity) {
+  if (+sampleActivity > MODERN_ACTIVITY || +sampleActivity <= 0) {
+    return false
+  } else {
+    if (typeof (sampleActivity) === 'string') {
+      if (isANumber(sampleActivity.replace('.', ''))) {
+        return Math.ceil((Math.log(MODERN_ACTIVITY / +sampleActivity) * HALF_LIFE_PERIOD) / Math.LN2);
+      } else {
+        return false
+      }
+    } else {
+      return false
+    }
+  }
 }
